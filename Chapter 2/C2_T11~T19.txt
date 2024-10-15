@@ -1,0 +1,181 @@
+第72页 11题
+（1）线性表无序
+ListNode* Search(ListNode *L,Elemtype e){
+	ListNode *p=L->next;
+	while( p!=NULL && p->data != e ){
+		p=p->next;
+	}
+	return p;
+}
+
+(2)递增有序
+istNode* Search(ListNode *L,Elemtype e){
+	ListNode *p=L->next;
+	while( p!=NULL && p->data != e ){
+		p=p->next;
+	}
+	return p;
+}
+
+(3)递减有序
+istNode* Search(ListNode *L,Elemtype e){
+	ListNode *p=L->next;
+	while( p!=NULL && p->data != e ){
+		p=p->next;
+	}
+	return p;
+}
+
+
+
+-----------------------------------------
+第12题 单链表点逆置
+bool Reverse(LinkNode *&L){
+	if(L->next == NULL || L==NULL) return false;
+	LinkNode *p=L->next,*q=p->next;
+	L->next = NULL;
+	while(q!=NULL){
+		p->next = L->next;
+		L->next = p;
+		p=q;
+		q=q->next;
+	}
+	return true;
+}
+
+
+
+-----------------------------------------
+第13题  O(n)求带头结点单链表的中间位置元素
+ElemType Middle(LinkNode *L){
+	LinkNode *p,*q;
+	p=L->next;
+	q=p;
+	while(p -> next!=NULL && p->next->next !=NULL){
+		q=q->next;
+		p=p->next->next;
+	}
+	return q->data;
+}
+
+
+
+-----------------------------------------
+第14题 在非空单链表的第一个最大值结点前
+	添加一个值为X的结点
+void InsretMax(LinkNode *&L,ElemType x){
+	LinkNode *pmax=L->next;
+	LinkNode *pmre,*p,*pr,*s;
+	p = L->next;
+	while(p!=NULL){
+		if(p->data > pmax->data){
+			pmax = p;
+			pmre = pr ;
+		}
+		pr=p;
+		p=p->next;
+	}
+	s = (LinkNode*)malloc(sizeof(LinkNode));
+	s->data = x;
+	s->next = pmax;
+	pmre->next = s ;	
+}
+
+
+
+-----------------------------------------
+第16题 按照频度排序
+bool LocateNode(LinkNode *&L,ElemType x){
+	LinkNode *p=L->next,*pre;
+	while(p!=NULL && p->data!=x){
+		p=p->next;
+	}
+	if(p==NULL) return false;
+	else{
+		++(p->freq);
+		pre=p->prior;
+		if(p != L->next){
+			if(pre->freq < p->freq){
+				pre->next = p ->next;
+				p->prior=pre->prior;
+				p->next->prior=pre;
+				p->next = pre ;
+			}
+		}  
+	}
+	return treu;
+}
+
+
+
+
+----------------------------------------
+第19题 用单链表表示集合，求交集
+(1) 元素无序
+void Union(LinkNode *La,LinkNode *Lb,LinkNode *&Lc){
+	LinkNode *pa=La->next,*pb=Lb->next;
+	LinkNode *pc,*pcr=Lc;
+	while(pa!=NULL){
+		pc=(LinkNode*)malloc(sizeof(LinkNode));
+		pc->data = pa->data;
+		pcr->next = pc;
+		pcr=pc;
+	}
+	while(pb!=NULL){
+		pa=La->next;
+	 	while(pa!=NULL && pa->data!=pb->data){
+			pa=pa->next;
+		}
+		if(pa == NULL){
+			pc=(LinkNode*)malloc(sizeof（LinkNode));
+			pc->data=pb->data;
+			pcr->next=pc;
+			pcr=pc;
+		}
+		pb=pb->next;
+	}
+	pc->next = NULL ;
+}
+时间复杂度：
+T(m,n) = m+m*n = O(m*n);
+
+(2) 原链表有序
+//二路归并思想
+void Union(Node *&h1,Node *&h2,Node *&h3){
+	Node *p1=h1->next,*p2=h2->next,*s;
+	h3 = (Node*)malloc(sizeof(Node));
+	h3 ->next = NULL;
+	Node p3=h3;
+	while(p1!=NULL && p2!=NULL){
+		if(p1->data < p2->data){
+			s=(Node*)malloc(sizeof(Node));
+			s->data = p1->data;
+			p3->next = s;
+			p3=s;
+			p1=p1->next;
+		}else{
+			s=(Node*)malloc(sizeof(Node));
+			s->data = p2->data;
+			p3->next = s;
+			p3=s;
+			p2=p2->next;
+		}
+	}
+	while(p1!=NULL){
+		s=(Node*)malloc(sizeof(Node));
+		s->data = p1->data;
+		p3->next = s;
+		p3=s;
+		p1=p1->next;
+	}
+	while(P2!=NULL){
+		s=(Node*)malloc(sizeof(Node));
+		s->data = p2->data;
+		p3->next = s;
+		p3=s;
+		p2=p2->next;
+	}
+	p3->next=NULL;
+}
+
+
